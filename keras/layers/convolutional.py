@@ -450,7 +450,7 @@ class Convolution2D(Layer):
         else:
             self.b = None
         
-         self.multipliers = {}
+        self.multipliers = {}
         if self.W_learning_rate_multiplier is not None:
             self.multipliers[self.W] = self.W_learning_rate_multiplier
         if (self.bias is not None) and (self.b_learning_rate_multiplier is not None):
