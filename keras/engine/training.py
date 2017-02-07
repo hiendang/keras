@@ -755,7 +755,7 @@ class Model(Container):
             else:
                 inputs = self.inputs + self.targets + self.sample_weights
 
-            training_updates = self.optimizer.get_updates(self._collected_trainable_weights,
+            training_updates = self.optimizer.get_updates(self._collected_trainable_weights,self.multipliers,
                                                           self.constraints,
                                                           self.total_loss)
             updates = self.updates + training_updates
