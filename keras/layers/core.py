@@ -764,8 +764,8 @@ class Dense(Layer):
                  W_regularizer=None, b_regularizer=None, activity_regularizer=None,
                  W_constraint=None, b_constraint=None,
                  bias=True, input_dim=None, 
-				 W_learning_rate_multiplier=None, b_learning_rate_multiplier=None,
-				 **kwargs):
+                 W_learning_rate_multiplier=None, b_learning_rate_multiplier=None,
+                 **kwargs):
         self.init = initializations.get(init)
         self.activation = activations.get(activation)
         self.output_dim = output_dim
@@ -781,7 +781,7 @@ class Dense(Layer):
         self.bias = bias
         self.initial_weights = weights
         self.input_spec = [InputSpec(ndim='2+')]
-		if not bias:
+        if not bias:
             if b_learning_rate_multiplier is not None:
                 raise Exception('b_learning_rate_multiplier provided with no bias.')
         self.W_learning_rate_multiplier = W_learning_rate_multiplier
@@ -810,7 +810,7 @@ class Dense(Layer):
                                      constraint=self.b_constraint)
         else:
             self.b = None
-		self.multipliers = {}
+        self.multipliers = {}
         if self.W_learning_rate_multiplier is not None:
             self.multipliers[self.W] = self.W_learning_rate_multiplier
         if (self.bias is not None) and (self.b_learning_rate_multiplier is not None):
@@ -844,8 +844,8 @@ class Dense(Layer):
                   'b_constraint': self.b_constraint.get_config() if self.b_constraint else None,
                   'bias': self.bias,
                   'input_dim': self.input_dim,
-				  'W_learning_rate_multiplier': self.W_learning_rate_multiplier if self.W_learning_rate_multiplier else None,
-				  'b_learning_rate_multiplier': self.b_learning_rate_multiplier if self.b_learning_rate_multiplier else None}
+                  'W_learning_rate_multiplier': self.W_learning_rate_multiplier if self.W_learning_rate_multiplier else None,
+                  'b_learning_rate_multiplier': self.b_learning_rate_multiplier if self.b_learning_rate_multiplier else None}
         base_config = super(Dense, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
 

@@ -392,8 +392,8 @@ class Convolution2D(Layer):
                  activity_regularizer=None,
                  W_constraint=None, b_constraint=None,
                  bias=True, 
-				 W_learning_rate_multiplier=None, b_learning_rate_multiplier=None,
-				 **kwargs):
+                 W_learning_rate_multiplier=None, b_learning_rate_multiplier=None,
+                 **kwargs):
         if dim_ordering == 'default':
             dim_ordering = K.image_dim_ordering()
         if border_mode not in {'valid', 'same', 'full'}:
@@ -419,7 +419,7 @@ class Convolution2D(Layer):
         self.bias = bias
         self.input_spec = [InputSpec(ndim=4)]
         self.initial_weights = weights
-		if not bias:
+        if not bias:
             if b_learning_rate_multiplier is not None:
                 raise Exception('b_learning_rate_multiplier provided with no bias.')
         self.W_learning_rate_multiplier = W_learning_rate_multiplier
@@ -449,8 +449,8 @@ class Convolution2D(Layer):
                                      constraint=self.b_constraint)
         else:
             self.b = None
-		
-		 self.multipliers = {}
+        
+         self.multipliers = {}
         if self.W_learning_rate_multiplier is not None:
             self.multipliers[self.W] = self.W_learning_rate_multiplier
         if (self.bias is not None) and (self.b_learning_rate_multiplier is not None):
@@ -510,7 +510,7 @@ class Convolution2D(Layer):
                   'W_constraint': self.W_constraint.get_config() if self.W_constraint else None,
                   'b_constraint': self.b_constraint.get_config() if self.b_constraint else None,
                   'bias': self.bias,
-				  'W_learning_rate_multiplier': self.W_learning_rate_multiplier if self.W_learning_rate_multiplier else None,
+                  'W_learning_rate_multiplier': self.W_learning_rate_multiplier if self.W_learning_rate_multiplier else None,
                   'b_learning_rate_multiplier': self.b_learning_rate_multiplier if self.b_learning_rate_multiplier else None}
         base_config = super(Convolution2D, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))

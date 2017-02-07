@@ -174,7 +174,7 @@ class SGD(Optimizer):
         self.weights = [self.iterations] + moments
         for p, g, m in zip(params, grads, moments):
             #v = self.momentum * m - lr * g  # velocity
-			# Apply learning rate multipliers if needed
+            # Apply learning rate multipliers if needed
             if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
@@ -184,7 +184,7 @@ class SGD(Optimizer):
 
             if self.nesterov:
                 #new_p = p + self.momentum * v - lr * g
-				new_p = p + self.momentum * v - (lr*lrm) * g
+                new_p = p + self.momentum * v - (lr*lrm) * g
             else:
                 new_p = p + v
 
@@ -248,7 +248,7 @@ class RMSprop(Optimizer):
             self.updates.append(K.update_add(self.iterations, 1))
 
         for p, g, a in zip(params, grads, accumulators):
-			if p in multipliers:
+            if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
                 lrm = K.variable(1.0)
@@ -256,7 +256,7 @@ class RMSprop(Optimizer):
             new_a = self.rho * a + (1. - self.rho) * K.square(g)
             self.updates.append(K.update(a, new_a))
             #new_p = p - lr * g / (K.sqrt(new_a) + self.epsilon)
-			new_p = p - (self.lr*lrm) * g / (K.sqrt(new_a) + self.epsilon)
+            new_p = p - (self.lr*lrm) * g / (K.sqrt(new_a) + self.epsilon)
             # apply constraints
             if p in constraints:
                 c = constraints[p]
@@ -309,14 +309,14 @@ class Adagrad(Optimizer):
             self.updates.append(K.update_add(self.iterations, 1))
 
         for p, g, a in zip(params, grads, accumulators):
-			if p in multipliers:
+            if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
                 lrm = K.variable(1.0)
             new_a = a + K.square(g)  # update accumulator
             self.updates.append(K.update(a, new_a))
             #new_p = p - lr * g / (K.sqrt(new_a) + self.epsilon)
-			new_p = p - (self.lr*lrm) * g / (K.sqrt(new_a) + self.epsilon)
+            new_p = p - (self.lr*lrm) * g / (K.sqrt(new_a) + self.epsilon)
             # apply constraints
             if p in constraints:
                 c = constraints[p]
@@ -379,7 +379,7 @@ class Adadelta(Optimizer):
 
             # use the new accumulator and the *old* delta_accumulator
             update = g * K.sqrt(d_a + self.epsilon) / K.sqrt(new_a + self.epsilon)
-			if p in multipliers:
+            if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
                 lrm = K.variable(1.0)
@@ -450,14 +450,14 @@ class Adam(Optimizer):
         self.weights = [self.iterations] + ms + vs
 
         for p, g, m, v in zip(params, grads, ms, vs):
-			if p in multipliers:
+            if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
                 lrm = K.variable(1.0)
             m_t = (self.beta_1 * m) + (1. - self.beta_1) * g
             v_t = (self.beta_2 * v) + (1. - self.beta_2) * K.square(g)
             #p_t = p - lr_t * m_t / (K.sqrt(v_t) + self.epsilon)
-			p_t = p - (lr_t*lrm) * m_t / (K.sqrt(v_t) + self.epsilon)
+            p_t = p - (lr_t*lrm) * m_t / (K.sqrt(v_t) + self.epsilon)
             self.updates.append(K.update(m, m_t))
             self.updates.append(K.update(v, v_t))
 
@@ -525,14 +525,14 @@ class Adamax(Optimizer):
         self.weights = [self.iterations] + ms + us
 
         for p, g, m, u in zip(params, grads, ms, us):
-			if p in multipliers:
+            if p in multipliers:
                 lrm = K.variable(multipliers[p])
             else:
                 lrm = K.variable(1.0)
             m_t = (self.beta_1 * m) + (1. - self.beta_1) * g
             u_t = K.maximum(self.beta_2 * u, K.abs(g))
             #p_t = p - lr_t * m_t / (u_t + self.epsilon)
-			p_t = p - (lr_t*lrm) * m_t / (u_t + self.epsilon)
+            p_t = p - (lr_t*lrm) * m_t / (u_t + self.epsilon)
             self.updates.append(K.update(m, m_t))
             self.updates.append(K.update(u, u_t))
 
